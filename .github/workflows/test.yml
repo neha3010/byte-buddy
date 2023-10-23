@@ -1,0 +1,33 @@
+name: Flaky Test CI
+
+on:
+  push:
+    branches:
+      - main  # Change this to the main branch name of your repository
+  pull_request:
+    branches:
+      - main  # Change this to the main branch name of your repository
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11  # Change this to the Java version your project requires
+
+      - name: Install Maven
+        run: |
+          sudo apt-get install maven
+        shell: bash
+
+      - name: Build and run the test
+        run: |
+          mvn clean install -DskipTests -pl byte-buddy-dep -am
+          mvn -pl byte-buddy-dep test -Dtest=net.bytebuddy.pool.TypePoolDefaultMethodDescriptionTest#testExceptions
+        shell: bash
