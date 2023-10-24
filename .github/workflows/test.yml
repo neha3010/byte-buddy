@@ -3,10 +3,10 @@ name: Flaky Test CI
 on:
   push:
     branches:
-      - main  # Change this to the main branch name of your repository
+      - byte-buddy  
   pull_request:
     branches:
-      - main  # Change this to the main branch name of your repository
+      - byte-buddy  
 
 jobs:
   run-tests:
